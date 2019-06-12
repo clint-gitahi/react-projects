@@ -7,13 +7,11 @@ class TodoList extends Component {
     super(props);
 
     this.state = {
-      todos: [
-        { task: "complete leetcode" },
-        { task: "complete divide conquer section" }
-      ]
+      todos: []
     };
 
     this.create = this.create.bind(this);
+    this.remove = this.remove.bind(this);
   }
 
   create(newTodo) {
@@ -22,10 +20,24 @@ class TodoList extends Component {
     });
   }
 
+  remove(id) {
+    this.setState({
+      todos: this.state.todos.filter(t => t.id !== id)
+    });
+  }
+
   render() {
     const todos = this.state.todos.map(todo => {
-      return <Todo task={todo.task} />;
+      return (
+        <Todo
+          key={todo.id}
+          id={todo.id}
+          task={todo.task}
+          removeTodo={this.remove}
+        />
+      );
     });
+
     return (
       <div>
         <h1>Todo list</h1>
@@ -35,4 +47,5 @@ class TodoList extends Component {
     );
   }
 }
+
 export default TodoList;
